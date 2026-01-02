@@ -10,7 +10,7 @@ FolderCrafter is a modern, portable Windows application designed to generate com
 
 - **🚀 Lightning Fast:** Generate dozens of folders in a single click.
 - **🎨 Modern UI:** A premium "crafted anomaly" aesthetic (Dark theme, Glassmorphism).
-- **📦 Portable:** Single `.exe` file. No installation required.
+- **📦 Flexible Deployment:** Run as a portable `.exe` (no install) or install for Context Menu integration.
 - **📝 Templates:** Create, edit, import, and export reusable JSON templates.
 - **📂 Reverse Engineering:** Scan an existing folder to automatically generate a template from it.
 - **🛡️ Secure:** Path traversal protection and safe file handling.
