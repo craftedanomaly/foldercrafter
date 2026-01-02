@@ -9,7 +9,7 @@ FolderCrafter is a modern, portable Windows application designed to generate com
 ## ✨ Features
 
 - **🚀 Lightning Fast:** Generate dozens of folders in a single click.
-- **🎨 Modern UI:** A premium "Crafted Anomaly" aesthetic (Dark theme, Glassmorphism).
+- **🎨 Modern UI:** A premium "crafted anomaly" aesthetic (Dark theme, Glassmorphism).
 - **📦 Portable:** Single `.exe` file. No installation required.
 - **📝 Templates:** Create, edit, import, and export reusable JSON templates.
 - **🛡️ Secure:** Path traversal protection and safe file handling.
@@ -30,37 +30,33 @@ You can download the latest portable executable from our website or the Release 
 
 ### Prerequisites
 
-- Python 3.10+
-- `pip`
+- Python 3.10 or higher
+- Git
 
-### Installation
+### Installation & Running
 
-1.  Clone the repository:
+1.  **Clone the repository:**
     ```bash
     git clone https://github.com/craftedanomaly/foldercrafter.git
     cd foldercrafter
     ```
 
-2.  Install dependencies:
+2.  **Set up a virtual environment (Recommended):**
     ```bash
-    pip install customtkinter
-    pip install pyinstaller  # for building
+    # Windows
+    python -m venv .venv
+    .venv\Scripts\activate
     ```
 
-3.  Run the app:
+3.  **Install dependencies:**
+    ```bash
+    pip install customtkinter
+    ```
+
+4.  **Run the application:**
     ```bash
     python main.py
     ```
-
-### Building the Executable
-
-To create the standalone `.exe`:
-
-1.  Run the build script:
-    ```bash
-    build.bat
-    ```
-2.  The executable will be in the `dist/` folder.
 
 ## 🤝 Contributing
 
