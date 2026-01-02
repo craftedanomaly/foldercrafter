@@ -19,12 +19,14 @@ AppPublisherURL={#MyAppURL}
 AppSupportURL={#MyAppURL}
 AppUpdatesURL={#MyAppURL}
 DefaultDirName={autopf}\{#MyAppName}
+LicenseFile=f:\Cursor\foldertemplate\license.txt
 DisableProgramGroupPage=yes
 ; Uncomment the following line to run in non administrative install mode (install for current user only.)
 PrivilegesRequired=lowest
 OutputDir=Output
 OutputBaseFilename=FolderCrafter_Setup_v1.0
 SetupIconFile=f:\Cursor\foldertemplate\foldercrafter.ico
+UninstallDisplayIcon={app}\{#MyAppExeName}
 Compression=lzma
 SolidCompression=yes
 WizardStyle=modern
@@ -56,6 +58,11 @@ Root: HKCU; Subkey: "Software\Classes\Directory\shell\FolderCrafter\command"; Va
 Root: HKCU; Subkey: "Software\Classes\Directory\Background\shell\FolderCrafter"; ValueType: string; ValueName: ""; ValueData: "Open with FolderCrafter"; Flags: uninsdeletekey; Tasks: contextmenu
 Root: HKCU; Subkey: "Software\Classes\Directory\Background\shell\FolderCrafter"; ValueType: string; ValueName: "Icon"; ValueData: "{app}\{#MyAppExeName}"; Flags: uninsdeletevalue; Tasks: contextmenu
 Root: HKCU; Subkey: "Software\Classes\Directory\Background\shell\FolderCrafter\command"; ValueType: string; ValueName: ""; ValueData: """{app}\{#MyAppExeName}"" ""%V"""; Flags: uninsdeletekey; Tasks: contextmenu
+
+; Context Menu for Scanning (Right click on a folder -> Scan)
+Root: HKCU; Subkey: "Software\Classes\Directory\shell\FolderCrafterScan"; ValueType: string; ValueName: ""; ValueData: "Scan with FolderCrafter"; Flags: uninsdeletekey; Tasks: contextmenu
+Root: HKCU; Subkey: "Software\Classes\Directory\shell\FolderCrafterScan"; ValueType: string; ValueName: "Icon"; ValueData: "{app}\{#MyAppExeName}"; Flags: uninsdeletevalue; Tasks: contextmenu
+Root: HKCU; Subkey: "Software\Classes\Directory\shell\FolderCrafterScan\command"; ValueType: string; ValueName: ""; ValueData: """{app}\{#MyAppExeName}"" --scan ""%1"""; Flags: uninsdeletekey; Tasks: contextmenu
 
 [Run]
 Filename: "{app}\{#MyAppExeName}"; Description: "{cm:LaunchProgram,{#MyAppName}}"; Flags: nowait postinstall skipifsilent

@@ -12,6 +12,14 @@ from pathlib import Path
 from tkinter import filedialog, messagebox
 import tkinter as tk
 import webbrowser
+import ctypes
+
+# Fix Taskbar Icon Grouping (Windows)
+myappid = 'craftedanomaly.foldercrafter.app.1.0' # arbitrary string
+try:
+    ctypes.windll.shell32.SetCurrentProcessExplicitAppUserModelID(myappid)
+except Exception:
+    pass
 
 
 class CTkToolTip:
@@ -621,18 +629,38 @@ class FolderCrafterApp(ctk.CTk):
         )
         list_header.grid(row=0, column=0, padx=24, pady=(28, 20), sticky="w")
         
+        # Action Buttons Container
+        btn_container = ctk.CTkFrame(list_panel, fg_color="transparent")
+        btn_container.grid(row=1, column=0, padx=20, pady=(0, 16), sticky="ew")
+        
         # New Template Button
         new_btn = ctk.CTkButton(
-            list_panel,
-            text="➕  New Template",
+            btn_container,
+            text="➕ New",
             font=ctk.CTkFont(size=14),
             height=44,
+            width=120,
             fg_color=COLOR_PRIMARY,
             hover_color=COLOR_PRIMARY_HOVER,
             corner_radius=10,
             command=self.new_template
         )
-        new_btn.grid(row=1, column=0, padx=20, pady=(0, 16), sticky="ew")
+        new_btn.pack(side="left", expand=True, fill="x", padx=(0, 8))
+
+        # Scan Folder Button
+        scan_btn = ctk.CTkButton(
+            btn_container,
+            text="📂 Scan",
+            font=ctk.CTkFont(size=14),
+            height=44,
+            width=100,
+            fg_color=COLOR_SURFACE_LIGHT,
+            hover_color=COLOR_SURFACE,
+            corner_radius=10,
+            command=self.scan_directory_ui
+        )
+        scan_btn.pack(side="right", expand=True, fill="x")
+        CTkToolTip(scan_btn, "Create template from a real folder")
         
         # Template List (Scrollable)
         self.template_list_frame = ctk.CTkScrollableFrame(
@@ -1319,9 +1347,86 @@ class FolderCrafterApp(ctk.CTk):
             messagebox.showerror("Import Failed", f"Could not import template:\n{ex}")
 
 
+    # ============================================================================
+    # SCAN / REVERSE ENGINEERING LOGIC
+    # ============================================================================
+    def scan_directory_ui(self):
+        """Open dialog to scan a directory."""
+        path = filedialog.askdirectory(title="Select Folder to Reverse Engineer")
+        if path:
+            self.scan_directory_logic(path)
+            
+    def scan_directory_logic(self, path):
+        """Logic to scan dir and populate editor."""
+        structure = self.generate_tree_text(path)
+        if structure:
+            # Create a new template name
+            folder_name = os.path.basename(path)
+            new_name = f"Scanned: {folder_name}"
+            
+            # Switch to Editor and New Template Mode
+            # We need to manually set the UI state here since we might be in generator view
+            self.show_templates()
+            
+            # Set up inputs
+            self.editing_template = None
+            self.editor_name_entry.delete(0, "end")
+            self.editor_name_entry.insert(0, new_name)
+            
+            self.editor_structure_textbox.delete("1.0", "end")
+            self.editor_structure_textbox.insert("1.0", "\n".join(structure)) # Join lines with newlines
+            
+            self.update_editor_preview()
+            
+            # Optional: Auto-save or verify?
+            messagebox.showinfo("Scan Complete", f"Successfully scanned '{folder_name}'!\n\nReview structure and click 'SAVE CHANGES'.")
+
+    def generate_tree_text(self, current_path, level=0):
+        """Recursive function to generate indented structure."""
+        IGNORED_DIRS = {'node_modules', '.git', '__pycache__', 'dist', 'build', 'venv', '.idea', '.vscode', '.venv', 'bin', 'obj'}
+        IGNORED_FILES = {'.DS_Store', 'Thumbs.db', 'desktop.ini'}
+        IGNORED_EXTS = {'.exe', '.dll', '.pyc', '.o', '.so', '.class'}
+        
+        lines = []
+        indent = "    " * level
+        
+        try:
+            items = sorted(os.listdir(current_path))
+        except PermissionError:
+            return [] # Skip unreadable dirs
+
+        for item in items:
+            full_path = os.path.join(current_path, item)
+            
+            if item in IGNORED_DIRS or item in IGNORED_FILES:
+                continue
+                
+            _, ext = os.path.splitext(item)
+            if ext.lower() in IGNORED_EXTS:
+                continue
+
+            if os.path.isdir(full_path):
+                lines.append(f"{indent}{item}/")
+                lines.extend(self.generate_tree_text(full_path, level + 1))
+            else:
+                # Strictly ignore files. FolderCrafter only generates folders.
+                continue
+
+        return lines
+
 # ============================================================================
 # ENTRY POINT
 # ============================================================================
 if __name__ == "__main__":
     app = FolderCrafterApp()
+    
+    # Check CLI args for --scan (Context Menu)
+    # Usage: main.py --scan "C:\Path\To\Scan"
+    if len(sys.argv) > 2 and sys.argv[1] == "--scan":
+        target = sys.argv[2].strip('"')
+        if os.path.isdir(target):
+            # We need to wait for the app to initialize, then trigger scan
+            # But since it's Tkinter/WinForms loop, we can usually call it before mainloop and it will queue
+            app.after(100, lambda: app.scan_directory_logic(target))
+    
     app.mainloop()
