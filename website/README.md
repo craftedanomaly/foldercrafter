@@ -35,14 +35,9 @@ Find the "Slide 1" comment and replace the inner div with a `<video>` tag:
 </div>
 ```
 
-**To add an Image:**
-Find the "Slide 2" comment and replace with an `<img>` tag:
-
-```html
-<div class="carousel-slide">
-    <img src="screenshot1.png" alt="App Screenshot" style="width:100%; height:100%; object-fit:cover;">
-</div>
-```
+**Carousel Navigation:**
+The carousel now includes Left/Right arrows and is Full Width (100%).
+The JavaScript handles the sliding logic automatically.
 
 ### 3. Support Link
 The "Buy Me a Coffee" link is now integrated into the Features grid.

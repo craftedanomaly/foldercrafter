@@ -26,8 +26,6 @@
             <span class="logo-text">FOLDER<span class="h-light">CRAFTER</span></span>
         </div>
         <nav class="nav-links">
-            <a href="#vision" class="nav-item">Vision</a>
-            <a href="#structure" class="nav-item">Structure</a>
             <a href="https://www.craftedanomaly.com" target="_blank" class="nav-item special">Crafted Anomaly</a>
         </nav>
     </header>
@@ -46,8 +44,12 @@
                 </p>
 
                 <div class="cta-group">
-                    <a href="#" id="download-btn" class="glass-btn primary">
-                        <span class="icon">⇩</span>
+                    <a href="#" id="download-btn" class="glass-btn primary download-action">
+                        <svg class="win-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 88 88" fill="currentColor"
+                            style="width: 24px; height: 24px;">
+                            <path
+                                d="M0 12.402l35.687-4.86.016 34.423-35.67.203zm35.67 33.529l.028 34.453L.028 75.48.01 46.152zM40.357 5.266L87.425 0l.21 41.527-47.278.437zM87.586 46.54l.023 41.678-47.22-6.602-.023-34.613z" />
+                        </svg>
                         <span class="btn-text">DOWNLOAD NOW</span>
                         <div class="shine"></div>
                     </a>
@@ -82,7 +84,8 @@
         <!-- Carousel / Showcase Section -->
         <section class="showcase">
             <div class="carousel-container">
-                <div class="carousel-track">
+                <button class="nav-arrow prev" onclick="moveSlide(-1)">❮</button>
+                <div class="carousel-track" id="track">
                     <!-- Slide 1: Video Placeholder -->
                     <div class="carousel-slide">
                         <div class="media-placeholder video">
@@ -102,6 +105,7 @@
                         </div>
                     </div>
                 </div>
+                <button class="nav-arrow next" onclick="moveSlide(1)">❯</button>
             </div>
             <div class="carousel-nav">
                 <button class="nav-dot active"></button>
