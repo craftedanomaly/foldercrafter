@@ -4,7 +4,7 @@
 
 FolderCrafter is a modern, portable Windows application designed to generate complex folder structures in seconds. Built for developers, creatives, and digital architects who tired of creating folders one by one.
 
-![App Screenshot](website/app-screen.png)
+![App Screenshot](images/app-screen.png)
 
 ## ✨ Features
 
@@ -25,7 +25,7 @@ FolderCrafter is a modern, portable Windows application designed to generate com
 
 You can download the latest portable executable from our website or the Release tab.
 
-[**Download FolderCrafter for Windows**](https://craftedanomaly.com/foldercrafter)
+[**Download FolderCrafter for Windows**](https://craftedanomaly.gumroad.com/l/dhhijc)
 
 ## 💻 Development
 

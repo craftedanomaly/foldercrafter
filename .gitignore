@@ -15,8 +15,14 @@ dist/
 .idea/
 
 # OS
-This Desktop.ini
+Desktop.ini
 Thumbs.db
 
 # Website
 website/
+
+# Output
+Output/
+
+# Build Scripts (local development)
+scripts/

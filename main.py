@@ -261,7 +261,7 @@ class FolderCrafterApp(ctk.CTk):
         
         # Set Icon
         try:
-            icon_path = resource_path("foldercrafter.ico")
+            icon_path = resource_path("images/foldercrafter.ico")
             self.iconbitmap(icon_path)
         except Exception:
             pass  # Icon might not exist in dev env or different OS
