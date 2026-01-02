@@ -77,3 +77,5 @@ Distributed under the MIT License. See `LICENSE` for more information.
   <a href="https://www.craftedanomaly.com">A Crafted Anomaly App</a> • 
   <a href="https://www.buymeacoffee.com/craftedanomaly">Support Development</a>
 </p>
+
+[![Downloads](https://img.shields.io/github/downloads/craftedanomaly/foldercrafter/total?style=for-the-badge&color=blue)](https://github.com/craftedanomaly/foldercrafter/releases)
