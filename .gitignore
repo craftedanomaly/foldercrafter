@@ -17,3 +17,6 @@ dist/
 # OS
 This Desktop.ini
 Thumbs.db
+
+# Website
+website/

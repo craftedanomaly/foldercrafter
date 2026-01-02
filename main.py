@@ -247,10 +247,39 @@ class FolderCrafterApp(ctk.CTk):
     def __init__(self):
         super().__init__()
         
+        # Configure window
         self.title("FolderCrafter")
-        self.geometry("1200x750")
-        self.configure(fg_color=COLOR_BG_DARK)
-        self.minsize(1000, 600)
+        self.geometry("1100x700")
+        
+        # Set Icon
+        try:
+            icon_path = resource_path("foldercrafter.ico")
+            self.iconbitmap(icon_path)
+        except Exception:
+            pass  # Icon might not exist in dev env or different OS
+
+        # Design System (Modern Palette - Slate & Indigo)
+        # Backgrounds
+        self.color_bg = "#0f172a"        # Very dark slate
+        self.color_surface = "#1e293b"   # Slate 800
+        self.color_surface_light = "#334155" # Slate 700
+        
+        # Accents
+        self.color_primary = "#6366f1"   # Indigo 500
+        self.color_primary_hover = "#4f46e5" # Indigo 600
+        self.color_secondary = "#a855f7" # Purple 500 (Gradients)
+        
+        # Text
+        self.color_text = "#f8fafc"      # Slate 50
+        self.color_text_muted = "#94a3b8"# Slate 400
+        
+        # Status
+        self.color_success = "#10b981"   # Emerald 500
+        self.color_error = "#ef4444"     # Red 500
+        self.color_warning = "#f59e0b"   # Amber 500
+
+        ctk.set_appearance_mode("Dark")
+        ctk.set_default_color_theme("dark-blue")
         
         # State
         self.templates = load_templates()
@@ -263,6 +292,17 @@ class FolderCrafterApp(ctk.CTk):
         
         self.create_sidebar()
         self.create_main_content()
+        
+        # Check command line arguments (Context Menu Support)
+        if len(sys.argv) > 1:
+            initial_path = sys.argv[1]
+            # Strip quotes if present (Windows sometimes adds them)
+            initial_path = initial_path.strip('"')
+            
+            if os.path.isdir(initial_path) and hasattr(self, 'target_entry'):
+                self.target_entry.delete(0, 'end')
+                self.target_entry.insert(0, initial_path)
+
         
         # Show generator by default
         self.show_generator()
